@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techit-client
+  labels:
+    app: techit-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: techit-client
+  template:
+    metadata:
+      labels:
+        app: techit-client
+    spec:
+      containers:
+      - name: techit-client
+        image: blushc/techit-bank-client
+        env:
+        - name: PROXY_HOST
+          value: "techit-server"
+        - name: PROXY_PORT
+          value: "8080"
+        ports:
+        - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: techit-client
+spec:
+  type: NodePort
+  selector:
+    app: techit-client
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8081
+    nodePort: 30083
