@@ -28,15 +28,3 @@ spec:
           value: "app"
         ports:
         - containerPort: 8080
----
-apiVersion: v2
-kind: Service
-metadata:
-  name: techit-server
-spec:
-  selector:
-    app: techit-server
-  ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
